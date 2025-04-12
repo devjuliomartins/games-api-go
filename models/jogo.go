@@ -1,10 +1,13 @@
 package models
 
+import "gorm.io/gorm"
+
 type Jogo struct {
-	Id             int    `json:"id"`
-	Titulo         string `json:"titulo"`
-	Genero         string `json:"genero"`
-	AnoLancamento  string `json:"anoLancamento"`
-	Desenvolvedora string `json:"desenvolvedora"`
-	Nota           string `json:"nota"`
+	gorm.Model
+	Titulo         string  `json:"titulo"`
+	Genero         string  `json:"genero"`
+	Plataforma     string  `json:"plataforma"`
+	AnoLancamento  int     `json:"anoLancamento"`
+	Desenvolvedora string  `json:"desenvolvedora"`
+	Nota           float64 `json:"nota"`
 }
