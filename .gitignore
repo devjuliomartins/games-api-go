@@ -1,0 +1,16 @@
+# Ignora arquivos de config sensíveis
+.env
+
+# Binários e compilados Go
+*.exe
+*.out
+*.test
+
+# Diretório de dependências
+/vendor/
+
+# Arquivos do sistema/editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
