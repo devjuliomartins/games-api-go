@@ -1,7 +1,11 @@
 package main
 
-import "github.com/devjuliomartins/games-api-go/routes"
+import (
+	"github.com/devjuliomartins/games-api-go/database"
+	"github.com/devjuliomartins/games-api-go/routes"
+)
 
 func main() {
 	routes.RouteGames()
+	database.ConectaBancoDeDados()
 }
