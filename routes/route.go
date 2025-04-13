@@ -8,7 +8,7 @@ import (
 func RouteGames() {
 	r := gin.Default()
 
-	r.GET("/games", controllers.ExibirGames)
+	r.GET("/games", controllers.ListarJogos)
 	r.POST("/games", controllers.CriarNovoJogo)
 
 	r.Run(":8080")

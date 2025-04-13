@@ -7,15 +7,10 @@ import (
 	"net/http"
 )
 
-func ExibirGames(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"id":             "1",
-		"Titulo":         "CS:GO",
-		"Genero":         "FPS",
-		"AnoLancamento":  "2012",
-		"Desenvolvedora": "Valve",
-		"Nota":           "9.0",
-	})
+func ListarJogos(c *gin.Context) {
+	var jogo []models.Jogo
+	database.DB.Find(&jogo)
+	c.JSON(200, jogo)
 }
 
 func CriarNovoJogo(c *gin.Context) {
