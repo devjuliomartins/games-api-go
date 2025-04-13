@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	routes.RouteGames()
 	database.ConectaBancoDeDados()
+	routes.RouteGames()
 }
