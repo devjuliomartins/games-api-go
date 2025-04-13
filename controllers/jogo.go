@@ -23,3 +23,10 @@ func CriarNovoJogo(c *gin.Context) {
 	database.DB.Create(&jogo)
 	c.JSON(http.StatusOK, jogo)
 }
+
+func VisualizarJogo(c *gin.Context) {
+	var jogo models.Jogo
+	id := c.Params.ByName("id")
+	database.DB.First(&jogo, id)
+	c.JSON(200, jogo)
+}
