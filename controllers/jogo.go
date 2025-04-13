@@ -37,3 +37,15 @@ func DeletarJogo(c *gin.Context) {
 	database.DB.Delete(&jogo, id)
 	c.JSON(200, jogo)
 }
+
+func EditaJogo(c *gin.Context) {
+	var jogo models.Jogo
+	id := c.Params.ByName("id")
+	database.DB.First(&jogo, id)
+	if err := c.ShouldBind(&jogo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	database.DB.Model(&jogo).Updates(jogo)
+	c.JSON(http.StatusOK, jogo)
+}
