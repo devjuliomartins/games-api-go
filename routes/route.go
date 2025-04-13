@@ -11,6 +11,7 @@ func RouteGames() {
 	r.GET("/games", controllers.ListarJogos)
 	r.POST("/games", controllers.CriarNovoJogo)
 	r.GET("/games/:id", controllers.VisualizarJogo)
+	r.DELETE("/games/:id", controllers.DeletarJogo)
 
 	r.Run(":8080")
 }

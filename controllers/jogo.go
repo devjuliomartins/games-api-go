@@ -30,3 +30,10 @@ func VisualizarJogo(c *gin.Context) {
 	database.DB.First(&jogo, id)
 	c.JSON(200, jogo)
 }
+
+func DeletarJogo(c *gin.Context) {
+	var jogo models.Jogo
+	id := c.Params.ByName("id")
+	database.DB.Delete(&jogo, id)
+	c.JSON(200, jogo)
+}
