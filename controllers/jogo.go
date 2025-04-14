@@ -56,3 +56,10 @@ func BuscarJogoPorGenero(c *gin.Context) {
 	database.DB.Where("genero LIKE ?", "%"+genero+"%").Find(&jogos)
 	c.JSON(200, jogos)
 }
+
+func BuscarJogoPorPlataforma(c *gin.Context) {
+	var jogos []models.Jogo
+	plataforma := c.Param("plataforma")
+	database.DB.Where("plataforma LIKE ?", "%"+plataforma+"%").Find(&jogos)
+	c.JSON(200, jogos)
+}
