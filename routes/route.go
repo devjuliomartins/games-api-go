@@ -13,6 +13,7 @@ func RouteGames() {
 	r.GET("/games/:id", controllers.VisualizarJogo)
 	r.DELETE("/games/:id", controllers.DeletarJogo)
 	r.PATCH("/games/:id", controllers.EditaJogo)
+	r.GET("/games/genero/:genero", controllers.BuscarJogoPorGenero)
 
 	r.Run(":8080")
 }

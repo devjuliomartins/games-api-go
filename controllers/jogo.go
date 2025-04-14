@@ -49,3 +49,10 @@ func EditaJogo(c *gin.Context) {
 	database.DB.Model(&jogo).Updates(jogo)
 	c.JSON(http.StatusOK, jogo)
 }
+
+func BuscarJogoPorGenero(c *gin.Context) {
+	var jogos []models.Jogo
+	genero := c.Param("genero")
+	database.DB.Where("genero = ?", genero).Find(&jogos)
+	c.JSON(200, jogos)
+}
