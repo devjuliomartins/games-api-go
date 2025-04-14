@@ -12,7 +12,7 @@ func RouteGames() {
 	r.POST("/games", controllers.CriarNovoJogo)
 	r.GET("/games/:id", controllers.VisualizarJogo)
 	r.DELETE("/games/:id", controllers.DeletarJogo)
-	r.PATCH("games/:id", controllers.EditaJogo)
+	r.PATCH("/games/:id", controllers.EditaJogo)
 
 	r.Run(":8080")
 }
