@@ -53,6 +53,6 @@ func EditaJogo(c *gin.Context) {
 func BuscarJogoPorGenero(c *gin.Context) {
 	var jogos []models.Jogo
 	genero := c.Param("genero")
-	database.DB.Where("genero = ?", genero).Find(&jogos)
+	database.DB.Where("genero LIKE ?", "%"+genero+"%").Find(&jogos)
 	c.JSON(200, jogos)
 }
