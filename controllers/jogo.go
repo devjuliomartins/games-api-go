@@ -74,6 +74,6 @@ func BuscarJogoPorDesenvolvedora(c *gin.Context) {
 func BuscarJogoPorNota(c *gin.Context) {
 	var jogos []models.Jogo
 	nota := c.Param("nota")
-	database.DB.Find(&jogos, "nota >= ?", nota)
+	database.DB.Order("nota desc, titulo").Find(&jogos, "nota >= ?", nota)
 	c.JSON(200, jogos)
 }
