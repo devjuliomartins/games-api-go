@@ -63,3 +63,10 @@ func BuscarJogoPorPlataforma(c *gin.Context) {
 	database.DB.Where("plataforma LIKE ?", "%"+plataforma+"%").Find(&jogos)
 	c.JSON(200, jogos)
 }
+
+func BuscarJogoPorDesenvolvedora(c *gin.Context) {
+	var jogos []models.Jogo
+	desenvolvedora := c.Param("desenvolvedora")
+	database.DB.Where("desenvolvedora LIKE ?", "%"+desenvolvedora+"%").Find(&jogos)
+	c.JSON(200, jogos)
+}
