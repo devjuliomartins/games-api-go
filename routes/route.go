@@ -16,6 +16,7 @@ func RouteGames() {
 	r.GET("/games/genero/:genero", controllers.BuscarJogoPorGenero)
 	r.GET("/games/plataforma/:plataforma", controllers.BuscarJogoPorPlataforma)
 	r.GET("/games/desenvolvedora/:desenvolvedora", controllers.BuscarJogoPorDesenvolvedora)
+	r.GET("/games/nota/:nota", controllers.BuscarJogoPorNota)
 
 	r.Run(":8080")
 }
