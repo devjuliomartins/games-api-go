@@ -5,6 +5,7 @@ import (
 	"github.com/devjuliomartins/games-api-go/database"
 	"github.com/devjuliomartins/games-api-go/models"
 	"github.com/gin-gonic/gin"
+	"math"
 	"net/http"
 	"strconv"
 )
@@ -35,9 +36,35 @@ func GetPaginationParams(c *gin.Context) (int, int, int, error) {
 }
 
 func ListarJogos(c *gin.Context) {
-	var jogo []models.Jogo
-	database.DB.Find(&jogo)
-	c.JSON(200, jogo)
+	pagina, limite, offset, err := GetPaginationParams(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	var total_jogos int64
+	if err := database.DB.Model(&models.Jogo{}).Count(&total_jogos).Error; err != nil {
+		c.JSON(500, gin.H{"error": "error counting games"})
+		return
+	}
+
+	var jogos []models.Jogo
+	if err := database.DB.Offset(offset).Limit(limite).Find(&jogos).Error; err != nil {
+		c.JSON(500, gin.H{"error": "error fetching games"})
+		return
+	}
+
+	total_paginas := int(math.Ceil(float64(total_jogos) / float64(limite)))
+
+	c.JSON(200, gin.H{
+		"meta": PaginationMeta{
+			TotalJogos:   int(total_jogos),
+			Limite:       limite,
+			PaginaAtual:  pagina,
+			TotalPaginas: total_paginas,
+		},
+		"data": jogos,
+	})
 }
 
 func CriarNovoJogo(c *gin.Context) {
