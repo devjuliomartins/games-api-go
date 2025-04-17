@@ -118,6 +118,17 @@ func BuscarJogoPorDesenvolvedora(c *gin.Context) {
 func BuscarJogoPorNota(c *gin.Context) {
 	var jogos []models.Jogo
 	nota := c.Param("nota")
-	database.DB.Order("nota desc, titulo").Find(&jogos, "nota >= ?", nota)
-	c.JSON(200, jogos)
+
+	query := database.DB.Model(&models.Jogo{}).Where("nota >= ?", nota).Order("nota desc, titulo")
+
+	meta, err := controller.PaginarConsulta(c, query, &jogos)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"meta": meta,
+		"data": jogos,
+	})
 }
