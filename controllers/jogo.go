@@ -1,11 +1,38 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/devjuliomartins/games-api-go/database"
 	"github.com/devjuliomartins/games-api-go/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
+
+type PaginationMeta struct {
+	TotalJogos   int `json:"total_jogos"`
+	Limite       int `json:"limite"`
+	PaginaAtual  int `json:"pagina_atual"`
+	TotalPaginas int `json:"total_paginas"`
+}
+
+func GetPaginationParams(c *gin.Context) (int, int, int, error) {
+	paginaStr := c.DefaultQuery("pagina", "1")
+	limiteStr := c.DefaultQuery("limite", "10")
+
+	pagina, err := strconv.Atoi(paginaStr)
+	if err != nil || pagina < 1 {
+		return 0, 0, 0, fmt.Errorf("invalid 'pagina' parameter")
+	}
+
+	limite, err := strconv.Atoi(limiteStr)
+	if err != nil || limite < 1 {
+		return 0, 0, 0, fmt.Errorf("invalid 'limite' parameter")
+	}
+
+	offset := (pagina - 1) * limite
+	return pagina, limite, offset, nil
+}
 
 func ListarJogos(c *gin.Context) {
 	var jogo []models.Jogo
