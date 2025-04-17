@@ -82,8 +82,19 @@ func BuscarJogoPorGenero(c *gin.Context) {
 func BuscarJogoPorPlataforma(c *gin.Context) {
 	var jogos []models.Jogo
 	plataforma := c.Param("plataforma")
-	database.DB.Where("plataforma LIKE ?", "%"+plataforma+"%").Find(&jogos)
-	c.JSON(200, jogos)
+
+	query := database.DB.Model(&models.Jogo{}).Where("plataforma LIKE ?", "%"+plataforma+"%")
+
+	meta, err := controller.PaginarConsulta(c, query, &jogos)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"meta": meta,
+		"data": jogos,
+	})
 }
 
 func BuscarJogoPorDesenvolvedora(c *gin.Context) {
